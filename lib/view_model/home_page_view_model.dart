@@ -5,9 +5,18 @@ import 'package:screen_recorder_poc/view_model/home_page_state.dart';
 /// Mutable
 final class HomePageViewModel extends Cubit<HomePageState> {
 
-  /// Initializes the ViewModel with an initial counter value of 0.
+  /// Initializes the ViewModel.
   HomePageViewModel() : super(const HomePageState.initial());
 
-  /// Increments the counter by 1.
-  void incrementCounter() => emit(state.copyWith(counter: state.counter + 1));
+  Future<void> startRecording() async {
+    // TODO: Implement in Phase 1
+  }
+
+  Future<void> stopRecording() async {
+    // TODO: Implement in Phase 2
+  }
+
+  Future<void> playRecording() async {
+    // TODO: Implement in Phase 3
+  }
 }

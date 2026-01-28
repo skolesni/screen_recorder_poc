@@ -1,23 +1,34 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-/// Defines the state for the HomePage.
+/// Defines the state of the HomePage.
 @immutable
 final class HomePageState extends Equatable {
-  /// The current counter value.
-  final int counter;
+  /// Indicates whether there is a recording available.
+  final bool hasRecording;
 
-  /// Creates a new HomePageState with the given counter value.
-  const HomePageState({required this.counter});
+  /// Indicates whether recording is in progress.
+  final bool isRecording;
 
-  /// Creates an initial HomePageState with a counter value of 0.
-  const HomePageState.initial() : counter = 0;
+  /// Indicates whether playback is in progress.
+  final bool isPlaying;
+
+  /// Creates a new HomePageState with the given values.
+  const HomePageState({this.hasRecording = false, this.isRecording = false, this.isPlaying = false});
+
+  /// Creates an initial HomePageState.
+  const HomePageState.initial() : hasRecording = false, isRecording = false, isPlaying = false;
+
+  /// Indicates whether the system is busy (recording or playing).
+  bool get isBusy => isRecording || isPlaying;
 
   /// Creates a copy of the current HomePageState with optional new values.
-  HomePageState copyWith({int? counter}) => HomePageState(
-      counter: counter ?? this.counter,
+  HomePageState copyWith({bool? hasRecording, bool? isRecording, bool? isPlaying}) => HomePageState(
+      hasRecording: hasRecording ?? this.hasRecording,
+      isRecording: isRecording ?? this.isRecording,
+      isPlaying: isPlaying ?? this.isPlaying,
     );
 
   @override
-  List<Object?> get props => [counter];
+  List<Object?> get props => [hasRecording, isRecording, isPlaying];
 }
