@@ -4,7 +4,7 @@ abstract interface class ScreenRecordingService {
   /// Returns true on success, false on failure.
   Future<bool> startRecording();
 
-  /// Stops screen recording.
+  /// Shows the existing recording UI.
   /// Returns true on success, false on failure.
-  Future<bool> stopRecording();
+  Future<bool> showRecording();
 }

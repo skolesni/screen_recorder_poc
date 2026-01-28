@@ -9,8 +9,8 @@ final class ScreenRecordingMethodChannel {
     await _channel.invokeMethod<void>('startRecording');
   }
 
-  /// Invokes the native stopRecording method.
-  Future<void> invokeStopRecording() async {
-    await _channel.invokeMethod<void>('stopRecording');
+  /// Invokes the native showRecording method.
+  Future<void> invokeShowRecording() async {
+    await _channel.invokeMethod<void>('showRecording');
   }
 }

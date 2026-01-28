@@ -21,13 +21,13 @@ final class HomePageViewModel extends Cubit<HomePageState> {
     emit(state.copyWith(recordingStatus: status));
   }
 
-  /// Stops recording. Sets hasRecording to true upon completion.
-  Future<void> stopRecording() async {
-    emit(state.copyWith(recordingStatus: .stoppingRecording));
+  /// Shows the existing recording UI. Temporarily sets hasRecording to true upon completion.
+  Future<void> showRecording() async {
+    emit(state.copyWith(recordingStatus: .showingRecording));
 
     // Not expecting platform errors in the state layer
     // Error feedback is not a requirements for this POC
-    final success = await _screenRecordingService.stopRecording();
+    final success = await _screenRecordingService.showRecording();
     if (success) {
       emit(state.copyWith(recordingStatus: .idle,hasRecording: true));
     }

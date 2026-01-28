@@ -9,6 +9,6 @@ enum VideoRecordingStatus {
   /// The recording is in progress.
   recording,
 
-  /// The recording is being stopped.
-  stoppingRecording,
+  /// The existing recording UI is being shown.
+  showingRecording,
 }

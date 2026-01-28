@@ -23,30 +23,37 @@ final class HomePage extends StatelessWidget {
             builder: (context, state) {
               final viewModel = context.read<HomePageViewModel>();
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (state.isStartButtonVisible)
-                    ElevatedButton.icon(
-                      onPressed: state.isStartButtonEnabled ? () => viewModel.startRecording() : null,
-                      icon: const Icon(Icons.fiber_manual_record),
-                      label: const Text('Start Recording'),
-                    ),
-                  if (state.isStopButtonVisible)
-                    ElevatedButton.icon(
-                      onPressed: state.isStopButtonEnabled ? () => viewModel.stopRecording() : null,
-                      icon: const Icon(Icons.stop),
-                      label: const Text('Stop Recording'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                    ),
-                  const SizedBox(height: 32),
-                  if (state.isPlayButtonVisible)
-                    ElevatedButton.icon(
-                      onPressed: state.isPlayButtonEnabled ? () => viewModel.playRecording() : null,
-                      icon: const Icon(Icons.play_arrow),
-                      label: const Text('Play Recording'),
-                    ),
-                ],
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 100),
+                    if (state.isStartButtonVisible)
+                      ElevatedButton.icon(
+                        onPressed: state.isStartButtonEnabled ? () => viewModel.startRecording() : null,
+                        icon: const Icon(Icons.fiber_manual_record),
+                        label: const Text('Start Recording'),
+                      ),
+                    if (state.isShowButtonVisible)
+                      ...[
+                        const Text('Press either the icon above or the Show recording button below to access UI to stop recording or toggle the microphone audio.', textAlign: .center,),
+                        const SizedBox(height: 16),
+                        ElevatedButton.icon(
+                        onPressed: state.isShowButtonEnabled ? () => viewModel.showRecording() : null,
+                        icon: const Icon(Icons.play_arrow),
+                        label: const Text('Show Recording'),
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+                      )],
+                    const SizedBox(height: 32),
+                    if (state.isPlayButtonVisible)
+                      ElevatedButton.icon(
+                        onPressed: state.isPlayButtonEnabled ? () => viewModel.playRecording() : null,
+                        icon: const Icon(Icons.play_arrow),
+                        label: const Text('Play Recording'),
+                      ),
+                  ],
+                ),
               );
             },
           ),

@@ -20,11 +20,11 @@ final class HomePageState extends Equatable {
   /// Creates a new HomePageState with the given values.
   const HomePageState({required this.hasRecording, required this.recordingStatus, required this.playbackStatus});
 
-  // Indicates whether the Start button should be visible.
+  // Indicates whether the Start Recording button should be visible.
   bool get isStartButtonVisible => recordingStatus == .idle || recordingStatus == .startingRecording;
 
-  // Indicates whether the Stop button should be visible.
-  bool get isStopButtonVisible => !isStartButtonVisible;
+  // Indicates whether the Show Recording button should be visible.
+  bool get isShowButtonVisible => !isStartButtonVisible;
 
   // Indicates whether the Play button should be visible.
   bool get isPlayButtonVisible => hasRecording;
@@ -33,7 +33,7 @@ final class HomePageState extends Equatable {
   bool get isStartButtonEnabled => recordingStatus == .idle && playbackStatus == .idle;
   
   // Indicates whether the Stop button is enabled.
-  bool get isStopButtonEnabled => recordingStatus == .recording;
+  bool get isShowButtonEnabled => recordingStatus == .recording;
 
   // Indicates whether the Play button is enabled.
   bool get isPlayButtonEnabled => recordingStatus == .idle && playbackStatus == .idle;

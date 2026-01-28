@@ -10,10 +10,6 @@ final class ScreenRecordingServiceImpl implements ScreenRecordingService {
 
   @override
   Future<bool> startRecording() async {
-    // Simulate success
-    await Future<void>.delayed(const Duration(seconds: 1));
-    return true;
-
     try {
       await _methodChannel.invokeStartRecording();
       return true;
@@ -24,13 +20,9 @@ final class ScreenRecordingServiceImpl implements ScreenRecordingService {
   }
 
   @override
-  Future<bool> stopRecording() async {
-    // Simulate success
-    await Future<void>.delayed(const Duration(seconds: 1));
-    return true;
-
+  Future<bool> showRecording() async {
     try {
-      await _methodChannel.invokeStopRecording();
+      await _methodChannel.invokeShowRecording();
       return true;
     } on Exception {
       // Detailed error feedback is not a requirements for this POC
