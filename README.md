@@ -55,10 +55,11 @@ Clarifications received during the call:
 1. Screen recording initiation via the `RPSystemBroadcastPickerView` from the main app and implemented in the `AppDelegate.swift`.
 1. Recording using "Broadcast Upload Extension" capability with branding configured to match the app name "KIX Sharing"
 1. The video recording is stored using `AVAssetWriter` into the app's local storage of the `BroadCast` extension, and then copied to the App Group container for access by the main app.
-1. The "Show recording" button can be pressed one, once recording is in progress, however, behavior is not robust due to not implemented observability of the recording and playback status.
+1. The system "Broadcast UI" control button (black/red target image) is positioned in the middle and can either be interacted with or hidden.
+1. The "Show recording" button can be pressed one, once recording is in progress, and this will bring up the recording UI, however, current behavior is not robust due to not implemented observability of the recording and playback status.
 1. The visibility of the "Play recording" button is implemented using a simple polling mechanism in the "HopePageViewModel" with 2 secs interval, however, no observability is implemented due to time constraints.
+1. Microphone audio toggle before recording. The app remembers the last setting, e.g. Mic = ON.
 1. BONUS: The video recording can be played back using `AVPlayer` API when "Play recording" button is visible.
-1. Microphone audio toggle before recording.
 
 ## Not implemented
 
@@ -72,8 +73,9 @@ Clarifications received during the call:
 
 ## TODOs
 
+- Explore "Dynamic Island" APIs to place an icon in the dynamic island, e.g. a Microphone icon that could be triggered to bring the KIX app to the foreground and toggle the microphone. Ideally the Dynamic Island trigger would toggle the audio mute setting. 
 - Explore "Broadcast Setup UI extension" for further possibilities to improve UX
+- Explore the `ReplayKit` options for better mute control during recording
 - Implement "ScreenRecordingEventChannel" with event providing status of the recording and presence of the recording file.
 - Tidy up button behavior in the `HomePage`
-- Explore the `ReplayKit` options for better mute control during recording
 - Explore better handling of audio stream.
