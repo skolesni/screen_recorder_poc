@@ -12,4 +12,7 @@ final class ScreenRecordingMethodChannel {
 
   /// Returns the App Group container path, or null if unavailable.
   Future<String?> invokeGetAppGroupPath() => _channel.invokeMethod<String>('getAppGroupPath');
+
+  /// Invokes the native playRecording method.
+  Future<void> invokePlayRecording() => _channel.invokeMethod<void>('playRecording');
 }

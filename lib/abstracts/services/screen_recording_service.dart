@@ -11,4 +11,8 @@ abstract interface class ScreenRecordingService {
   /// Checks if there is an existing recording.
   /// Returns true if a recording exists, false otherwise.
   Future<bool> hasRecording();
+
+  /// Plays the existing recording.
+  /// Returns true on success, false on failure.
+  Future<bool> playRecording();
 }

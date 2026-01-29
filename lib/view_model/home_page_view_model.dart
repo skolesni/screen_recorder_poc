@@ -59,17 +59,16 @@ final class HomePageViewModel extends Cubit<HomePageState> {
     return super.close();
   }
 
-  /// Plays recording.
+  /// Plays recording using the native AVPlayerViewController.
   Future<void> playRecording() async {
-    emit(state.copyWith(playbackStatus: VideoPlaybackStatus.startingPlayback));
-    
-    // Platform playback service is not a requirements for this POC
-    // Simulating playback with delays 
-    await Future<void>.delayed(const Duration(seconds: 1));
-    emit(state.copyWith(playbackStatus: VideoPlaybackStatus.playing));
-    await Future<void>.delayed(const Duration(seconds: 3));
-    emit(state.copyWith(playbackStatus: VideoPlaybackStatus.stoppingPlayback));
-    await Future<void>.delayed(const Duration(seconds: 1));
-    emit(state.copyWith(playbackStatus: VideoPlaybackStatus.idle));
+    emit(state.copyWith(playbackStatus: .playing));
+
+    try {
+      await _screenRecordingService.playRecording();
+      // Simulate start playback duration, should be wired up with actual playback events in production
+      await Future.delayed(const Duration(seconds: 1)); 
+    } finally {
+      emit(state.copyWith(playbackStatus: .idle));
+    }
   }
 }

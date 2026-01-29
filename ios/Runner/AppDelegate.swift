@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import ReplayKit
+import AVKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -44,6 +45,10 @@ import ReplayKit
             let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier)?.path
             result(path)
 
+        case "playRecording":
+            playRecording()
+            result(nil)
+
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -72,5 +77,22 @@ import ReplayKit
         picker.preferredExtension = "com.fundsmith.mauitest.BroadcastExtension"
         picker.showsMicrophoneButton = true
         rootView.addSubview(picker)
+    }
+
+    private func playRecording() {
+        guard let containerURL = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: appGroupIdentifier
+        ) else { return }
+
+        let fileURL = containerURL.appendingPathComponent("Recording001.mp4")
+        guard FileManager.default.fileExists(atPath: fileURL.path) else { return }
+
+        let player = AVPlayer(url: fileURL)
+        let playerVC = AVPlayerViewController()
+        playerVC.player = player
+
+        window?.rootViewController?.present(playerVC, animated: true) {
+            player.play()
+        }
     }
 }
