@@ -2,6 +2,10 @@
 
 This demo app demonstrates some screen recording capabilities on iOS for the next generation of "KIX sharing" project. It allows users to record their screen activities and save them as video files locally in the app, then view the recordings.
 
+## App Screenshots
+
+![Screenshots](screenshots.png)
+
 ## High Level requirements
 
 The new app will be branded as "KIX Sharing". The app is built to demonstrate the following requirements:
