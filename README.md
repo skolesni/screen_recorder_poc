@@ -25,6 +25,7 @@ Clarifications received during the call:
 - No need to upload anywhere
 - Local playback is desirable
 - Available packages do not satisfy the requirement to mute/un-mute audio, so custom implementation is needed
+- If possible, mute/unmute experience during recording should be explored and if possible improved
 - No UI styling to implement
 - Minimal architecture patterns
 - Quality of code
