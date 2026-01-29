@@ -70,7 +70,7 @@ Clarifications received during the call:
 
 - UI styling, as per the requirement.
 - Observable pattern to monitor recording status in the "Home Page" screen, due to timeframe constraints of this POC. This would require implementation of Platform Event Channel wired up to the Broadcast Extension to monitor recording status and update the UI accordingly. Button statuses are simulated with delays for demo purposes, however, a better alignment is needed when integrating with.
-- Toggling microphone during the recording session, due to limited time. However one of ideas that I had is to explore setting `RPScreenRecorder.shared().isMicrophoneEnabled` property from the `HomePage` UI.
+- Toggling microphone during the recording session, due to limited time. However one of ideas that I had is to explore "Dynamic Island" APIs and setting `RPScreenRecorder.shared().isMicrophoneEnabled` property from the `HomePage` UI or via "Dynamic Island" interaction.
 - Sharing of the recorded video, due to timeframe constraints of this POC. Straightforward implementation could be achieved using `UIActivityViewController`.
 - Multiple recordings, as no requirement, and essentially require a recording browsing UI.
 - Unit testing, due to timeframe constraints of this POC, however, `Model`, `Domain`, `ViewModel` and `Abstracts` layers should aim for 100% test coverage, where widgets placed in the View Layer should also be considered for testing.
