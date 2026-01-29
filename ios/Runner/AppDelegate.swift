@@ -37,8 +37,8 @@ import AVKit
             result(nil)
 
         case "showRecording":
-            // Present the picker again so the user can either stop or toggle the microphone button.
-            presentBroadcastPicker()
+            // Auto-tap the picker to bring up the broadcast stop dialog.
+            presentBroadcastPicker(autoTap: true)
             result(nil)
 
         case "getAppGroupPath":
@@ -62,21 +62,34 @@ import AVKit
     // The user is expected to stop the broadcast manually via the system UI, however,
     // the implemented Stop button relaunches the picker if the user is lost and came back to the app
     // to stop the recording.
-    private func presentBroadcastPicker() {
+    private func presentBroadcastPicker(autoTap: Bool = false) {
         guard let rootView = window?.rootViewController?.view else { return }
 
         // Remove any previously added picker
         rootView.viewWithTag(9999)?.removeFromSuperview()
 
-        // Present a visible picker so the user can select the BroadcastExtension.
-        // The programmatic trigger bypasses preferredExtension and falls back to system recording,
-        // so we must let the user tap manually.
         let picker = RPSystemBroadcastPickerView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
         picker.tag = 9999
-        picker.center = rootView.center
         picker.preferredExtension = "com.fundsmith.mauitest.BroadcastExtension"
         picker.showsMicrophoneButton = true
-        rootView.addSubview(picker)
+
+        if autoTap {
+            // For stopping a broadcast, programmatic trigger works since the extension is already selected.
+            // Hide the picker and simulate a tap on its internal button.
+            picker.frame = CGRect(x: -100, y: -100, width: 1, height: 1)
+            rootView.addSubview(picker)
+            for subview in picker.subviews {
+                if let button = subview as? UIButton {
+                    button.sendActions(for: .touchUpInside)
+                    break
+                }
+            }
+        } else {
+            // For starting, the user must manually tap to select the BroadcastExtension.
+            // Programmatic trigger bypasses preferredExtension and falls back to system recording.
+            picker.center = rootView.center
+            rootView.addSubview(picker)
+        }
     }
 
     private func playRecording() {
