@@ -41,4 +41,14 @@ final class ScreenRecordingServiceImpl implements ScreenRecordingService {
     final path = '$containerPath/Recording001.mp4';
     return await _storageService.fileExists(path);
   }
+
+  @override
+  Future<bool> playRecording() async {
+    try {
+      await _methodChannel.invokePlayRecording();
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
 }
