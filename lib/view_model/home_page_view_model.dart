@@ -39,26 +39,6 @@ final class HomePageViewModel extends Cubit<HomePageState> {
     emit(state.copyWith(recordingStatus: status));
   }
 
-  void _startPollingForRecording() {
-    _pollTimer?.cancel();
-    _checkForRecording();
-    _pollTimer = Timer.periodic(const Duration(seconds: 2), (_) => _checkForRecording());
-  }
-
-  Future<void> _checkForRecording() async {
-    final exists = await _screenRecordingService.hasRecording();
-    if (exists && !state.hasRecording) {
-      emit(state.copyWith(hasRecording: true));
-    }
-  }
-
-  @override
-  Future<void> close() {
-    // Disposing resources
-    _pollTimer?.cancel();
-    return super.close();
-  }
-
   /// Plays recording using the native AVPlayerViewController.
   Future<void> playRecording() async {
     emit(state.copyWith(playbackStatus: .playing));
@@ -69,6 +49,26 @@ final class HomePageViewModel extends Cubit<HomePageState> {
       await Future.delayed(const Duration(seconds: 1)); 
     } finally {
       emit(state.copyWith(playbackStatus: .idle));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    // Disposing resources
+    _pollTimer?.cancel();
+    return super.close();
+  }
+
+  void _startPollingForRecording() {
+    _pollTimer?.cancel();
+    _checkForRecording();
+    _pollTimer = Timer.periodic(const Duration(seconds: 2), (_) => _checkForRecording());
+  }
+
+  Future<void> _checkForRecording() async {
+    final exists = await _screenRecordingService.hasRecording();
+    if (exists && !state.hasRecording) {
+      emit(state.copyWith(hasRecording: true));
     }
   }
 }
