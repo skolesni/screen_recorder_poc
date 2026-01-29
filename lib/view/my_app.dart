@@ -10,7 +10,7 @@ final class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    title: 'Flutter Demo',
+    title: 'KIX Sharing (Demo)',
     theme: ThemeData(
       colorScheme: .fromSeed(seedColor: Colors.deepPurple),
     ),
