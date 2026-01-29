@@ -10,7 +10,8 @@ final locator = GetIt.instance;
 void configureInjection() {
   // Singletons
   locator.registerLazySingleton<ScreenRecordingMethodChannel>(() => ScreenRecordingMethodChannel());
-  locator.registerLazySingleton<ScreenRecordingService>(() => ScreenRecordingServiceImpl(locator()));
+  locator.registerLazySingleton<StorageService>(() => const StorageServiceImpl());
+  locator.registerLazySingleton<ScreenRecordingService>(() => ScreenRecordingServiceImpl(locator(), locator()));
 
   // Factories
   locator.registerFactory<HomePageViewModel>(() => HomePageViewModel(locator()));

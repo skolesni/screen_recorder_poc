@@ -4,9 +4,10 @@ import 'package:screen_recorder_poc/model/platform/screen_recording_method_chann
 /// Implementation of [ScreenRecordingService] backed by platform channels.
 final class ScreenRecordingServiceImpl implements ScreenRecordingService {
   final ScreenRecordingMethodChannel _methodChannel;
+  final StorageService _storageService;
 
   /// Creates an instance with the given [ScreenRecordingMethodChannel].
-  ScreenRecordingServiceImpl(this._methodChannel);
+  const ScreenRecordingServiceImpl(this._methodChannel, this._storageService);
 
   @override
   Future<bool> startRecording() async {
@@ -28,5 +29,16 @@ final class ScreenRecordingServiceImpl implements ScreenRecordingService {
       // Detailed error feedback is not a requirements for this POC
       return false;
     }
+  }
+
+  @override
+  Future<bool> hasRecording() async {
+    final containerPath = await _methodChannel.invokeGetAppGroupPath();
+    if (containerPath == null) {
+      return false;
+    }
+
+    final path = '$containerPath/Recording001.mp4';
+    return await _storageService.fileExists(path);
   }
 }

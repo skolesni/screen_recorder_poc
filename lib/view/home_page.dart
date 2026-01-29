@@ -26,9 +26,8 @@ final class HomePage extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const SizedBox(height: 100),
                     if (state.isStartButtonVisible)
                       ElevatedButton.icon(
                         onPressed: state.isStartButtonEnabled ? () => viewModel.startRecording() : null,

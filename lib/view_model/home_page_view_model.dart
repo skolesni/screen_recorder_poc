@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:screen_recorder_poc/abstracts.dart';
 import 'package:screen_recorder_poc/view_model/home_page_state.dart';
@@ -6,9 +8,14 @@ import 'package:screen_recorder_poc/view_model/home_page_state.dart';
 /// Mutable
 final class HomePageViewModel extends Cubit<HomePageState> {
   final ScreenRecordingService _screenRecordingService;
+  Timer? _pollTimer;
 
   /// Initializes the ViewModel with the given [ScreenRecordingService].
-  HomePageViewModel(this._screenRecordingService) : super(const HomePageState.initial());
+  HomePageViewModel(this._screenRecordingService) : super(const HomePageState.initial()) {
+    // In production this should use observable pattern via platform event channels,
+    // however, compromised implementation for POC
+    _startPollingForRecording();
+  }
 
   /// Starts recording.
   Future<void> startRecording() async {
@@ -28,12 +35,28 @@ final class HomePageViewModel extends Cubit<HomePageState> {
     // Not expecting platform errors in the state layer
     // Error feedback is not a requirements for this POC
     final success = await _screenRecordingService.showRecording();
-    if (success) {
-      emit(state.copyWith(recordingStatus: .idle,hasRecording: true));
+    final status = success ? VideoRecordingStatus.idle : VideoRecordingStatus.recording;
+    emit(state.copyWith(recordingStatus: status));
+  }
+
+  void _startPollingForRecording() {
+    _pollTimer?.cancel();
+    _checkForRecording();
+    _pollTimer = Timer.periodic(const Duration(seconds: 2), (_) => _checkForRecording());
+  }
+
+  Future<void> _checkForRecording() async {
+    final exists = await _screenRecordingService.hasRecording();
+    if (exists && !state.hasRecording) {
+      emit(state.copyWith(hasRecording: true));
     }
-    else {
-      emit(state.copyWith(recordingStatus: .recording));
-    }
+  }
+
+  @override
+  Future<void> close() {
+    // Disposing resources
+    _pollTimer?.cancel();
+    return super.close();
   }
 
   /// Plays recording.
